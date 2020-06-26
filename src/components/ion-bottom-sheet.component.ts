@@ -17,6 +17,7 @@ const HTML_TEMPLATE = `
  
 const CSS_STYLE = `
   :host  {
+    touch-action: none;
     width: 100%;
     height: 100%;
     position: absolute;
