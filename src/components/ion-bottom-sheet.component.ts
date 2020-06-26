@@ -36,9 +36,7 @@ const CSS_STYLE = `
     position: fixed;
     background-color: white;
     width: 100%;
-    height: 40px;
-    display: block;
-    z-index: 777;
+    z-index: 888;
   }
 
   #drag-icon{
@@ -52,12 +50,10 @@ const CSS_STYLE = `
   #close-button-container{
     width: 100%;
     position: relative;
-    height: 26px;
-    z-index: inherit;
+    height: 36px;
   }
 
   #close-button{
-    z-index: inherit;
     width: 26px;
     height: 26px;
     position: absolute;
@@ -68,12 +64,35 @@ const CSS_STYLE = `
   }
 
   #ion-bottom-sheet-content{
-    --margin-top: 40px;
     touch-action: none;
     overflow: hidden;
+    margin-top: 40px
   }
 
+  #ion-bottom-sheet.drag-icon-disabled  #drag-icon,
+  #ion-bottom-sheet.close-button-disabled #close-button-container{
+    display: none !important;
+  }
 
+  #ion-bottom-sheet.drag-icon-disabled #close-button{
+    top: 5px;
+  }
+
+  #ion-bottom-sheet.drag-icon-disabled #ionic-bottom-sheet-content{
+    margin-top: 30px;  
+  }
+
+  #ion-bottom-sheet.close-button-disabled #ionic-bottom-sheet-content{
+    margin-top: 15px;  
+  }
+
+  #ion-bottom-sheet.close-button-disabled.drag-icon-disabled #ionic-bottom-sheet-content{
+    margin-top: 0px;  
+  }
+
+  #ion-bottom-sheet.close-button-disabled.drag-icon-disabled #ionic-bottom-sheet-header{
+    display: none;  
+  }
 `;
  
 @Component({
@@ -114,19 +133,8 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
     this._element.nativeElement.addEventListener("transitionend", this._changeBorder.bind(this));
 
     // define css style
-    this._setStyle('display', this.hideCloseButton ? 'none' : 'block', '#close-button-container');
-    this._setStyle('height', this.hideCloseButton ? '10px' : '40px', '#ion-bottom-sheet-header');
-    this._setStyle('margin-top', this.hideCloseButton ? '10px' : '40px', '#ion-bottom-sheet-content');
-
-    this._setStyle('display', this.hideDragIcon ? 'none' : 'block', '#drag-icon');
-    this._setStyle('height', this.hideDragIcon ? '30px' : '40px', '#ion-bottom-sheet-header');
-    this._setStyle('margin-top', this.hideDragIcon ? '30px' : '40px', '#ion-bottom-sheet-content');
-
-    this._setStyle('height', !this.hideDragIcon && this.hideCloseButton ? '10px' : '40px', '#ion-bottom-sheet-header');
-    this._setStyle('margin-top', !this.hideDragIcon && this.hideCloseButton ? '10px' : '40px', '#ion-bottom-sheet-content');
-
-    this._setStyle('display', this.hideDragIcon && this.hideCloseButton ? 'none': 'block', '#ion-bottom-sheet-header');
-    this._setStyle('margin-top', this.hideDragIcon && this.hideCloseButton ? '0px': '40px', '#ion-bottom-sheet-content');
+    this._setCss("close-button-disabled", this.hideCloseButton ? "add" : "remove", "#ion-bottom-sheet");
+    this._setCss("drag-icon-disabled", this.hideDragIcon ? "add" :  "remove", "#ion-bottom-sheet");
 
     if (this.disableDrag) { return; }
 
@@ -207,6 +215,19 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
       this._hasBorderRoundStyle = true;
       this._setStyle('border-top-left-radius', '10px');
       this._setStyle('border-top-right-radius', '10px');
+    }
+  }
+
+  private _setCss(className, action: ("add" | "remove"), selector = null){
+    switch (action) {
+      case "add":
+        selector == null ? this._renderer.addClass(this._element.nativeElement, className) : this._renderer.addClass(this._element.nativeElement.querySelector(selector), className);
+        break;
+      case "remove":
+        selector == null ? this._renderer.removeClass(this._element.nativeElement, className) : this._renderer.removeClass(this._element.nativeElement.querySelector(selector), className);
+        break;
+      default:
+        return;
     }
   }
 
