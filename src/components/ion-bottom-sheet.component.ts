@@ -79,19 +79,19 @@ const CSS_STYLE = `
     top: 5px;
   }
 
-  #ion-bottom-sheet.drag-icon-disabled #ionic-bottom-sheet-content{
+  #ion-bottom-sheet.drag-icon-disabled #ion-bottom-sheet-content{
     margin-top: 30px;  
   }
 
-  #ion-bottom-sheet.close-button-disabled #ionic-bottom-sheet-content{
+  #ion-bottom-sheet.close-button-disabled #ion-bottom-sheet-content{
     margin-top: 15px;  
   }
 
-  #ion-bottom-sheet.close-button-disabled.drag-icon-disabled #ionic-bottom-sheet-content{
+  #ion-bottom-sheet.close-button-disabled.drag-icon-disabled #ion-bottom-sheet-content{
     margin-top: 0px;  
   }
 
-  #ion-bottom-sheet.close-button-disabled.drag-icon-disabled #ionic-bottom-sheet-header{
+  #ion-bottom-sheet.close-button-disabled.drag-icon-disabled #ion-bottom-sheet-header{
     display: none;  
   }
 `;
