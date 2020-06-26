@@ -219,28 +219,32 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   }
 
   private _setCss(className, action: ("add" | "remove"), selector = null){
-    switch (action) {
-      case "add":
-        selector == null ? this._renderer.addClass(this._element.nativeElement, className) : this._renderer.addClass(this._element.nativeElement.querySelector(selector), className);
-        break;
-      case "remove":
-        selector == null ? this._renderer.removeClass(this._element.nativeElement, className) : this._renderer.removeClass(this._element.nativeElement.querySelector(selector), className);
-        break;
-      default:
-        return;
-    }
+    this._domCtrl.write(() => {
+      switch (action) {
+        case "add":
+          selector == null ? this._renderer.addClass(this._element.nativeElement, className) : this._renderer.addClass(this._element.nativeElement.querySelector(selector), className);
+          break;
+        case "remove":
+          selector == null ? this._renderer.removeClass(this._element.nativeElement, className) : this._renderer.removeClass(this._element.nativeElement.querySelector(selector), className);
+          break;
+        default:
+          return;
+      }
+    });
   }
 
   private _setStyle(property, value, selector = null){
-    if (selector != null) {
-      this._renderer.setStyle(this._element.nativeElement.querySelector(selector), property, value);
-    }else{
-      this._renderer.setStyle(this._element.nativeElement, property , value);
-    }
+    this._domCtrl.write(() => {
+      if (selector != null) {
+        this._renderer.setStyle(this._element.nativeElement.querySelector(selector), property, value);
+      }else{
+        this._renderer.setStyle(this._element.nativeElement, property , value);
+      }
+    });
   }
 
   private _setTranslateY(value) {
-    this._domCtrl.write(() => { this._setStyle('transform', 'translateY(' + value + ')'); });
+    this._setStyle('transform', 'translateY(' + value + ')');
   }
 
   /*********************************************************************************************************/
