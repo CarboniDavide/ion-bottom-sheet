@@ -4,30 +4,31 @@ import { SheetState } from './ion-bottom-sheet-state';
 import * as Hammer from 'hammerjs';
 
 const HTML_TEMPLATE = `
-<ion-content id="ion-bottom-sheet">
+<div id="ion-bottom-sheet">
   <div id="ion-bottom-sheet-header">
-    <div id="drag-icon"></div>
-    <div id="close-button-container"><div id="close-button" (click)="closeSheet()"></div></div>
-  </div> 
+    <div id="ion-bottom-sheet-header-content">
+      <div id="drag-icon"></div>
+      <div id="close-button-container"><div id="close-button" (click)="closeSheet()"></div></div>
+    </div> 
+  </div>
   <div id="ion-bottom-sheet-content">
     <ng-content></ng-content>
   </div>
-</ion-content>
+</div>
 `;
  
 const CSS_STYLE = `
   :host  {
     touch-action: none;
+    padding: 5px;
     width: 100%;
     height: 100%;
     position: absolute;
     left: 0;
     z-index: 11 !important;
     background-color: white;
-    transform: translateY(110%);
-    padding: 5px !important;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     transition: none;
     will-change: transform;
     box-shadow: 0px 4px 16px  rgba(0, 0, 0, 0.12);
@@ -35,6 +36,14 @@ const CSS_STYLE = `
 
   #ion-bottom-sheet-header{
     position: fixed;
+    top:0;
+    left:0;
+    padding: 5px;
+    width: 100%;
+    z-index: 888;
+  }
+
+  #ion-bottom-sheet-header-content{
     background-color: white;
     width: 100%;
     z-index: 888;
@@ -50,8 +59,7 @@ const CSS_STYLE = `
   
   #close-button-container{
     width: 100%;
-    position: relative;
-    height: 36px;
+    height: 26px;
   }
 
   #close-button{
@@ -59,7 +67,7 @@ const CSS_STYLE = `
     height: 26px;
     position: absolute;
     background: #c0c0c0;
-    right: 15px;
+    right: 10px;
     border-radius: 100%;
     content: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"> <path fill="7a7a7e" d="M278.6 256l68.2-68.2c6.2-6.2 6.2-16.4 0-22.6-6.2-6.2-16.4-6.2-22.6 0L256 233.4l-68.2-68.2c-6.2-6.2-16.4-6.2-22.6 0-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3l68.2 68.2-68.2 68.2c-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3 6.2 6.2 16.4 6.2 22.6 0l68.2-68.2 68.2 68.2c6.2 6.2 16.4 6.2 22.6 0 6.2-6.2 6.2-16.4 0-22.6L278.6 256z"/> </svg>');
   }
@@ -67,7 +75,7 @@ const CSS_STYLE = `
   #ion-bottom-sheet-content{
     touch-action: none;
     overflow: hidden;
-    margin-top: 40px
+    margin-top: 35px
   }
 
   #ion-bottom-sheet.drag-icon-disabled  #drag-icon,
@@ -76,15 +84,19 @@ const CSS_STYLE = `
   }
 
   #ion-bottom-sheet.drag-icon-disabled #close-button{
-    top: 5px;
+    top: 10px !important;
+  }
+
+  #ion-bottom-sheet.drag-icon-disabled #close-button-container{
+    height: 31px;
   }
 
   #ion-bottom-sheet.drag-icon-disabled #ion-bottom-sheet-content{
-    margin-top: 30px;  
+    margin-top: 35px;  
   }
 
   #ion-bottom-sheet.close-button-disabled #ion-bottom-sheet-content{
-    margin-top: 15px;  
+    margin-top: 10px;  
   }
 
   #ion-bottom-sheet.close-button-disabled.drag-icon-disabled #ion-bottom-sheet-content{
@@ -214,8 +226,8 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
     }else{
       if (this._hasBorderRoundStyle) { return; }
       this._hasBorderRoundStyle = true;
-      this._setStyle('border-top-left-radius', '10px');
-      this._setStyle('border-top-right-radius', '10px');
+      this._setStyle('border-top-left-radius', '15px');
+      this._setStyle('border-top-right-radius', '15px');
     }
   }
 

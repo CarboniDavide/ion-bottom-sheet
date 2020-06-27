@@ -64,7 +64,7 @@ Use it in your component template like this:
     [minHeight]="minHeight" 
     [dockedHeight]="dockedHeight"
     [canBounce]="canBounce" 
-    [topDistance]="distanceTop"
+    [topDistance]="topDistance"
     [hideCloseButton]="hideCloseButton"
     [hideDragIcon]="hideDragIcon"
     [roundBorderOnTop]="roundBorderOnTop"
