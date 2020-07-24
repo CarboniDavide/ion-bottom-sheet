@@ -23,7 +23,7 @@ $ npm i @types/hammerjs
 ## Inputs
   - `roundBorderOnTop: boolean` - Change border radius css style when state is on `top`. Default value: `true`.
   - `hideDragIcon: boolean` - Hide drag icon. Default value: `false`. 
-  - `hideCloseButton: boolean` - Hide and disable close sheet panel. Default value: `false`.
+  - `hideCloseButton: boolean` - Hide and disable close sheet button. Default value: `false`.
   - `dockedHeight: number` - Height of the sheet when is placed in docked position. Default value: `50`.
   - `canBounce: boolean` - Determines whether the sheet should automatically bounce when gesture touch end. Default value: `true`.
   - `disableDrag: boolean` - Disables sheet drag. Default value: `false`.
