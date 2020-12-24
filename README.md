@@ -21,9 +21,21 @@ $ npm i @types/hammerjs
 # API
 
 ## Inputs
-  - `roundBorderOnTop: boolean` - Change border radius css style when state is on `top`. Default value: `true`.
-  - `hideDragIcon: boolean` - Hide drag icon. Default value: `false`. 
+  - `roundBorder: boolean` - Use round border style. Default value: `true`.
+  - `roundBorderOnTop: boolean` - Remove round border style when state is on `top`. Default value: `true`.
+  - `shadowBorder: boolean` - Use shadow border style. Default value: `true`.
+  - `shadowBorderOnTop: boolean` - Remove shadow border style when state is on `top`. Default value: `true`.
+  - `hideDragIcon: boolean` - Hide drag icon. Default value: `false`.
+  - `hideDragIconOnTop: boolean` - Hide drag icon when state is on `top`. Default value: `false`.
   - `hideCloseButton: boolean` - Hide and disable close sheet button. Default value: `false`.
+  - `hideCloseButtonOnTop: boolean` - Hide and disable close button when state is on `top`. Default value: `false`.
+  - `hideSeparator: boolean` - Hide line seprator from sheet header. Default value: `false`.
+  - `titleCentered: boolean` - Put header sheet title in the center. Default value: `false`.
+  - `title: boolean` - Header sheet title content. Default value: `Header Title`.
+  - `titleFamily: boolean` - Header sheet title font family. Default value: `inherit`.
+  - `titleSize: boolean` -  Header sheet title font size. Default value: `20px`.
+  - `hideTitle: boolean` - Remove title from sheet header. Default value: `false`.
+  - `hideHeader: boolean` - Remove header from sheet. Default value: `false`.
   - `dockedHeight: number` - Height of the sheet when is placed in docked position. Default value: `50`.
   - `canBounce: boolean` - Determines whether the sheet should automatically bounce when gesture touch end. Default value: `true`.
   - `disableDrag: boolean` - Disables sheet drag. Default value: `false`.
@@ -31,7 +43,8 @@ $ npm i @types/hammerjs
   - `transition: string` - Specify custom CSS transition when bounce movement is enabled. Default value: `0.2s ease-in-out`.
   - `state: SheetState` - Current state of the sheet. Possible values are: SheetState.Bottom, SheetState.Docked, SheetState.Top. Default value: `SheetState.Docked`.
   - `minHeight: number` - Minimum height of the sheet when it is in bottom state. Default value: `0`.
-
+  
+  
 # Demostration
 
 ![Davide Carboni - Ion Bottom Sheet](doc/images/ion-sheet-states.png?raw=true "Title")
