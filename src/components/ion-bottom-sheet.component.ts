@@ -177,7 +177,7 @@ const CSS_STYLE = `
 }
 
 :host.no-header #ibs-content {
-  margin-top: -5px !important;
+  margin-top: 0px !important;
 }
 `;
  
