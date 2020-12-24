@@ -31,9 +31,9 @@ $ npm i @types/hammerjs
   - `hideCloseButtonOnTop: boolean` - Hide and disable close button when state is on `top`. Default value: `false`.
   - `hideSeparator: boolean` - Hide line seprator from sheet header. Default value: `false`.
   - `titleCentered: boolean` - Put header sheet title in the center. Default value: `false`.
-  - `title: boolean` - Header sheet title content. Default value: `Header Title`.
-  - `titleFamily: boolean` - Header sheet title font family. Default value: `inherit`.
-  - `titleSize: boolean` -  Header sheet title font size. Default value: `20px`.
+  - `title: string` - Header sheet title content. Default value: `Header Title`.
+  - `titleFamily: string` - Header sheet title font family. Default value: `inherit`.
+  - `titleSize: string` -  Header sheet title font size. Default value: `20px`.
   - `hideTitle: boolean` - Remove title from sheet header. Default value: `false`.
   - `hideHeader: boolean` - Remove header from sheet. Default value: `false`.
   - `dockedHeight: number` - Height of the sheet when is placed in docked position. Default value: `50`.
