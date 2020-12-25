@@ -53,7 +53,7 @@ const CSS_STYLE = `
 
 :host .separator{
   border-bottom-style: solid;
-  border-bottom-color: rgba(#a7a2a2, 0.2);
+  border-bottom-color: rgba(220, 220, 220, 1);
   border-bottom-width: 1px;
 }
 
@@ -155,6 +155,10 @@ const CSS_STYLE = `
   margin-top: 40px;
 }
 
+:host.no-header #ibs-content {
+  margin-top: 0px !important;
+}
+
 :host.no-drag-icon.no-title #ibs-content {
   margin-top: 40px;
 }
@@ -174,10 +178,6 @@ const CSS_STYLE = `
 
 :host.no-drag-icon.no-title.no-close-btn #ibs-content {
   margin-top: 30px;
-}
-
-:host.no-header #ibs-content {
-  margin-top: 0px !important;
 }
 `;
  
