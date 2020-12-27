@@ -1,4 +1,4 @@
-# Ion 4 Bottom Sheet
+# Ion 4 Bottom Sheet [(show in live demo)](https://carbonidavide.github.io/ion-bottom-sheet)
 
 Bottom sheet component for Ionic 4.
 
