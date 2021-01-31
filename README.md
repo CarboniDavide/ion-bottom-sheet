@@ -1,4 +1,4 @@
-# Ion 4 Bottom Sheet
+# Ion 4 Bottom Sheet [(show in live demo)](https://carbonidavide.github.io/ion-bottom-sheet)
 
 Bottom sheet component for Ionic 4.
 
@@ -36,13 +36,18 @@ $ npm i @types/hammerjs
   - `titleSize: string` -  Header sheet title font size. Default value: `20px`.
   - `hideTitle: boolean` - Remove title from sheet header. Default value: `false`.
   - `hideHeader: boolean` - Remove header from sheet. Default value: `false`.
-  - `dockedHeight: number` - Height of the sheet when is placed in docked position. Default value: `50`.
+  - `dockedHeight: number` - Height of the sheet when is placed in docked position. Default value: `200`.
   - `canBounce: boolean` - Determines whether the sheet should automatically bounce when gesture touch end. Default value: `true`.
   - `disableDrag: boolean` - Disables sheet drag. Default value: `false`.
   - `topDistance: number` - Distance from top of fully opened sheet. Default value: `0`.
-  - `transition: string` - Specify custom CSS transition when bounce movement is enabled. Default value: `0.2s ease-in-out`.
+  - `transition: string` - Specify custom css transition when bounce movement is enabled. Default value: `0.2s ease-out`.
   - `state: SheetState` - Current state of the sheet. Possible values are: SheetState.Bottom, SheetState.Docked, SheetState.Top. Default value: `SheetState.Docked`.
   - `minHeight: number` - Minimum height of the sheet when it is in bottom state. Default value: `0`.
+  - `bounceDelta: number` - Bounce value to change sheet state. Default value: `30`.
+  - `enableScrollContent: boolean` - Enable scroll content in all sheet state: Default value `true`.
+  - `enableScrollContentOnlyOnTop: boolean` - Enable scroll content only when sheet state is top. Default value: `false`.
+  - `enableShadowHeaderOnScrolling: boolean` - Use shadow css style in the top of content when scrolling. Default value: `true`.
+  - `useSmoothScrolling: boolean` - Use css smooth style to scroll content. Default value: `true`.
   
   
 # Demostration
