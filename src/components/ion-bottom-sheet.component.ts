@@ -60,7 +60,7 @@ const CSS_STYLE = `
 
 :host .separator{
   border-bottom-style: solid;
-  border-bottom-color: rgba(#a7a2a2, 0.2);
+  border-bottom-color: rgba(220, 220, 220, 1);
   border-bottom-width: 1px;
 }
 
