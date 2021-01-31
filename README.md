@@ -93,10 +93,6 @@ Use it in your component template like this:
 </ion-bottom-sheet>
 ```
 
-# Issues
-
-Actually sheet content don't support scrolling !
-
 # License
 
 The MIT License (MIT)
