@@ -44,7 +44,7 @@ $ npm i @types/hammerjs
   - `state: SheetState` - Current state of the sheet. Possible values are: SheetState.Bottom, SheetState.Docked, SheetState.Top. Default value: `SheetState.Docked`.
   - `minHeight: number` - Minimum height of the sheet when it is in bottom state. Default value: `0`.
   - `bounceDelta: number` - Bounce value to change sheet state. Default value: `30`.
-  - `enableScrollContent: boolean` - Enable scroll content in all sheet state: Default value `true`.
+  - `enableScrollContent: boolean` - Enable scroll content in all sheet state: Default value `false`.
   - `enableScrollContentOnlyOnTop: boolean` - Enable scroll content only when sheet state is top. Default value: `false`.
   - `enableShadowHeaderOnScrolling: boolean` - Use shadow css style in the top of content when scrolling. Default value: `true`.
   - `useSmoothScrolling: boolean` - Use css smooth style to scroll content. Default value: `true`.
