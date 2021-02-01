@@ -49,7 +49,7 @@ const CSS_STYLE = `
 }
 
 :host #ibs-header.bottom-header-shadow{
-  box-shadow: 0 3px 3px -3px  rgba(0, 0, 0, 0.7);
+  box-shadow: 0 3px 3px -3px  rgba(0, 0, 0, 0.3);
 }
 
 :host #ibs-header{
@@ -194,7 +194,7 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   @Input() transition: string = '0.25s ease-out';
   @Input() state: SheetState = SheetState.Bottom;
   @Input() title: string = "Header Title";
-  @Input() enableScrollContent: Boolean = true;
+  @Input() enableScrollContent: Boolean = false;
   @Input() enableScrollContentOnlyOnTop: Boolean = false;
   @Input() enableShadowHeaderOnScrolling: Boolean = true;
   @Input() useSmoothScrolling: Boolean = true;
@@ -402,14 +402,27 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
 
   private _restoreNativeContentSize(){
     if (!this._scrollContent) { return; }
-    let newContentHeight = "calc(100vh - " + (this.topDistance + this._element.nativeElement.querySelector("#ibs-header").getBoundingClientRect().height) + "px)";
+    let newContentHeight = "calc(100vh - " + (this.topDistance + this._getHeaderHeight()) + "px)";
     this._setStyle("height", newContentHeight, this._element.nativeElement.querySelector("#ibs-content"));
   }
 
   private _changeNativeContentSize(){
     if (!this._scrollContent) { return; }
-    let newContentHeight = "calc(100vh - " + (this._element.nativeElement.getBoundingClientRect().y + this._element.nativeElement.querySelector("#ibs-header").getBoundingClientRect().height) + "px)";
+    let newContentHeight = "calc(100vh - " + (this._element.nativeElement.getBoundingClientRect().y + this._getHeaderHeight()) + "px)";
     this._setStyle("height", newContentHeight, this._element.nativeElement.querySelector("#ibs-content"));
+    this._autoEnableContentScroll();
+  }
+
+  private _getHeaderHeight(){
+    return this.hideHeader ? 0 : this._element.nativeElement.querySelector("#ibs-header").getBoundingClientRect().height;
+  }
+
+  private _autoEnableContentScroll(){
+    this._domCtrl.read(() => {
+      let contentInnerScrollHeight = this._element.nativeElement.querySelector("#ibs-content-inner").scrollHeight;
+      let contentHeight = this._element.nativeElement.querySelector("#ibs-content").getBoundingClientRect().height;
+      this._scrollContent = (contentHeight - contentInnerScrollHeight < 0) && !this.enableScrollContentOnlyOnTop;
+    });
   }
 
   private _contentShadowOnScroll(){
