@@ -49,7 +49,7 @@ const CSS_STYLE = `
 }
 
 :host #ibs-header.bottom-header-shadow{
-  box-shadow: 0 3px 3px -3px  rgba(0, 0, 0, 0.7);
+  box-shadow: 0 3px 3px -3px  rgba(0, 0, 0, 0.3);
 }
 
 :host #ibs-header{
