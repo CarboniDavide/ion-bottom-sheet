@@ -402,14 +402,18 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
 
   private _restoreNativeContentSize(){
     if (!this._scrollContent) { return; }
-    let newContentHeight = "calc(100vh - " + (this.topDistance + this._element.nativeElement.querySelector("#ibs-header").getBoundingClientRect().height) + "px)";
+    let newContentHeight = "calc(100vh - " + (this.topDistance + this._getHeaderHeight()) + "px)";
     this._setStyle("height", newContentHeight, this._element.nativeElement.querySelector("#ibs-content"));
   }
 
   private _changeNativeContentSize(){
     if (!this._scrollContent) { return; }
-    let newContentHeight = "calc(100vh - " + (this._element.nativeElement.getBoundingClientRect().y + this._element.nativeElement.querySelector("#ibs-header").getBoundingClientRect().height) + "px)";
+    let newContentHeight = "calc(100vh - " + (this._element.nativeElement.getBoundingClientRect().y + this._getHeaderHeight()) + "px)";
     this._setStyle("height", newContentHeight, this._element.nativeElement.querySelector("#ibs-content"));
+  }
+
+  private _getHeaderHeight(){
+    return this.hideHeader ? 0 : this._element.nativeElement.querySelector("#ibs-header").getBoundingClientRect().height;
   }
 
   private _contentShadowOnScroll(){
