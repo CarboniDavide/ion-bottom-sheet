@@ -194,7 +194,7 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   @Input() transition: string = '0.25s ease-out';
   @Input() state: SheetState = SheetState.Bottom;
   @Input() title: string = "Header Title";
-  @Input() enableScrollContent: Boolean = true;
+  @Input() enableScrollContent: Boolean = false;
   @Input() enableScrollContentOnlyOnTop: Boolean = false;
   @Input() enableShadowHeaderOnScrolling: Boolean = true;
   @Input() useSmoothScrolling: Boolean = true;
