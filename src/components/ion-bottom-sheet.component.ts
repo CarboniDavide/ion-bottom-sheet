@@ -421,7 +421,7 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
     this._domCtrl.read(() => {
       let contentInnerScrollHeight = this._element.nativeElement.querySelector("#ibs-content-inner").scrollHeight;
       let contentHeight = this._element.nativeElement.querySelector("#ibs-content").getBoundingClientRect().height;
-      this._scrollContent = (contentHeight - contentInnerScrollHeight < 0);
+      this._scrollContent = (contentHeight - contentInnerScrollHeight < 0) && !this.enableScrollContentOnlyOnTop;
     });
   }
 
