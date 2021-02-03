@@ -268,21 +268,21 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
 
   private _loadEvents(){
     if (!this.hideCloseButton) {
-      this._element.nativeElement.querySelector("#close-button").addEventListener("click", this.closeSheet.bind(this));
+      this._renderer.listen(this._element.nativeElement.querySelector("#close-button"), "click", this.closeSheet.bind(this));
     }
   
     if (this.disableDrag) { return; }
-    this._element.nativeElement.addEventListener("transitionend", this._checkForAnimationOnTop.bind(this));
+    this._renderer.listen(this._element.nativeElement, "transitionend", this._checkForAnimationOnTop.bind(this));
 
     if (!this.canBounce) { return; }
 
     if (this.enableScrollContent) {
-      this._element.nativeElement.addEventListener("transitionend", this._checkForScrolling.bind(this));
-      this._element.nativeElement.querySelector("#ibs-content-inner").addEventListener("scroll", this._contentShadowOnScroll.bind(this));
+      this._renderer.listen(this._element.nativeElement, "transitionend", this._checkForScrolling.bind(this));
+      this._renderer.listen(this._element.nativeElement.querySelector("#ibs-content-inner"), "scroll", this._contentShadowOnScroll.bind(this));
     }
 
     if (this.enableScrollContent && !this.enableScrollContentOnlyOnTop) {
-      this._element.nativeElement.addEventListener("transitionend", this._changeNativeContentSize.bind(this));
+      this._renderer.listen(this._element.nativeElement, "transitionend", this._changeNativeContentSize.bind(this));
     }
   }
 
@@ -334,10 +334,11 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   }
 
   private _checkForScrolling(){
-    this._scrollContent = this.enableScrollContent && !this.enableScrollContentOnlyOnTop;
     if (this._element.nativeElement.getBoundingClientRect().y == this._getPosition(SheetState.Top)){
       this._scrollContent = this.enableScrollContent;
+      return;
     }
+    this._scrollContent = this.enableScrollContent && !this.enableScrollContentOnlyOnTop;
   }
 
   private _checkForAnimationOnTop(){
@@ -460,9 +461,6 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   private _onHeaderGestureEnd(ev, dyInitial=0){
     if (!this.canBounce) { 
       this._restoreNativeContentSize();
-      // this._enableTransition();
-      // this._checkForAnimationOnTop();
-      // if (this.shadowBorder) { this._enableSheetShadow(); }
       if (this.enableScrollContent) { this._checkForScrolling(); }
       if (this.enableScrollContent && !this.enableScrollContentOnlyOnTop) { this._changeNativeContentSize(); }
       return; 
