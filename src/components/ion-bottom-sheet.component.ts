@@ -63,10 +63,6 @@ const CSS_STYLE = `
   border-bottom-width: 1px;
 }
 
-:host .bottom-shadow-border{
-  box-shadow: 0px 3px 3px  rgba(0, 0, 0, 0.12);
-}
-
 :host #drag-icon{
   margin: 0 auto;
   height: 5px;
