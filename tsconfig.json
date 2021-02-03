@@ -17,6 +17,7 @@
     "scripts"
   ],
   "angularCompilerOptions": {
-    "skipTemplateCodegen": true
+    "skipTemplateCodegen": true,
+    "enableResourceInlining": true
   }
 }
