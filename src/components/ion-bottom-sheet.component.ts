@@ -41,7 +41,6 @@ const CSS_STYLE = `
 :host #ibs-container.round-border{
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  transition: 0.25s;
 }
 
 :host #ibs-container.shadow-border{
