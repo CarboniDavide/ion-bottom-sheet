@@ -491,9 +491,10 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   }
 
   private _onContentGestureEnd(ev){
-    if (!this._scrollContent && !this.disableDrag) { this._onHeaderGestureEnd(ev, this._dyInitialScrollDown); return; }
     // initialize up and down scroll initial values
     this._dyInitialScrollUp = this._dyInitialScrollDown = 0;
+    
+    if (!this._scrollContent && !this.disableDrag) { this._onHeaderGestureEnd(ev, this._dyInitialScrollDown); return; }
     // define scroll math function
     let currentScrollPosition = this._element.nativeElement.querySelector("#ibs-content-inner").scrollTop;
     let speed = - Math.sign(ev.deltaY) * (Math.exp(Math.round(Math.abs(ev.velocityY))) - 1);
