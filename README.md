@@ -48,7 +48,18 @@ $ npm i @types/hammerjs
   - `enableScrollContentOnlyOnTop: boolean` - Enable scroll content only when sheet state is top. Default value: `false`.
   - `enableShadowHeaderOnScrolling: boolean` - Use shadow css style in the top of content when scrolling. Default value: `true`.
   - `useSmoothScrolling: boolean` - Use css smooth style to scroll content. Default value: `true`.
-  
+  - `restoreScrollOnWhenChangeState: string` - Define in wich state scroll will be restored. Default value: `none`:
+    - You can use a simple string using the state name:
+      - "docked",
+      - "top",
+      - "bottom",
+      - "always"
+      
+    - You can use two string and the **">"** character to specify in wich direction scroll-reset must be performed. For example : a possible string is: **"bottom>top"**: reset scroll when state change from **bottom to top**. Other values:
+      - "top>bottom",
+      - "top>docked",
+      - "bottom>top",
+      -  and more ...
   
 # Demostration
 
@@ -92,6 +103,10 @@ Use it in your component template like this:
   .....
 </ion-bottom-sheet>
 ```
+
+# Issues
+
+Actually sheet content don't support scrolling !
 
 # License
 

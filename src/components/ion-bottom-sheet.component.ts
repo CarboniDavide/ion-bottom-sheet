@@ -36,6 +36,7 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   @Input() enableScrollContentOnlyOnTop: Boolean = false;
   @Input() enableShadowHeaderOnScrolling: Boolean = true;
   @Input() useSmoothScrolling: Boolean = true;
+  @Input() restoreScrollOnWhenChangeState: string = "none";
   
   @Output() stateChange: EventEmitter<SheetState> = new EventEmitter<SheetState>();
 
@@ -71,6 +72,7 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (!changes.state) { return; }
     this._restoreNativeContentSize();
+    this._restoreScrolling(changes.state.previousValue, changes.state.currentValue);
     this._enableTransition();
     this._setSheetState(changes.state.currentValue);
   }
@@ -174,11 +176,12 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   private _checkForScrolling(){
     // initialize up and down scroll initial values
     this._dyInitialScrollUp = this._dyInitialScrollDown = 0;
-
+    
     if (this._element.nativeElement.getBoundingClientRect().y == this._getPosition(SheetState.Top)){
       this._scrollContent = this.enableScrollContent;
       return;
     }
+
     this._scrollContent = this.enableScrollContent && !this.enableScrollContentOnlyOnTop;
   }
 
@@ -191,9 +194,6 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
       if (!this._sheetTopAnimationHasBeenPerformed) { return; }
       this._sheetTopAnimationHasBeenPerformed = false;
       this._scrollContent = false;
-      if (this.enableScrollContent && this.enableScrollContentOnlyOnTop) {
-       this._element.nativeElement.querySelector("#ibs-content-inner").scroll({ top: 0, behavior: this.useSmoothScrolling ? 'smooth' : 'auto'});
-      }
     }
 
     if (!this.roundBorderOnTop && this.roundBorder) {
@@ -240,6 +240,31 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
 
   private _disableTransition(){
     this._setStyle('transition', "none", this._element.nativeElement);
+  }
+
+  private _restoreScrolling(oldState:SheetState, newState: SheetState) {
+    if (!this.enableScrollContent) { return; }
+    if (this.restoreScrollOnWhenChangeState == "none") { return; }
+    let isToRestore: Boolean = false;
+    if (this.restoreScrollOnWhenChangeState == "always") {
+      isToRestore = true
+    }else{
+      let states: string[] = this.restoreScrollOnWhenChangeState.replace(/ /g,'').split(">");
+      let selectedNewState = states[states.length-1].charAt(0).toUpperCase() + states[states.length-1].slice(1);
+      let selectedOldState = states[0].charAt(0).toUpperCase() + states[0].slice(1);
+
+      if (SheetState[selectedNewState] == newState){
+        if (selectedOldState == selectedNewState){
+          isToRestore = true;
+        }else {
+            isToRestore = (SheetState[selectedOldState] == oldState);
+        }
+      }
+    }
+    
+    if (isToRestore){
+      this._element.nativeElement.querySelector("#ibs-content-inner").scroll({ top: 0, behavior: this.useSmoothScrolling ? 'smooth' : 'auto'});
+    }
   }
 
   private _restoreNativeContentSize(){
