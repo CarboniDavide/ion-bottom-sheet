@@ -337,7 +337,11 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   }
 
   private _onContentGestureEnd(ev){
-    if (!this._scrollContent && !this.disableDrag) { this._onHeaderGestureEnd(ev, this._dyInitialScrollDown); return; }
+    if (!this._scrollContent && !this.disableDrag) { 
+      this._onHeaderGestureEnd(ev, this._dyInitialScrollDown); 
+      this._scrollContent = true;
+      return; 
+    }
     // initialize up and down scroll initial values
     this._dyInitialScrollUp = this._dyInitialScrollDown = 0;
     // restore performance scroll flag 
