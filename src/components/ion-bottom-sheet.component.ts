@@ -44,8 +44,8 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   private _sheetTopAnimationHasBeenPerformed: Boolean = false;
   private _bottomShadowHeaderHasBeenPerformed: Boolean = false;
   private _scrollUpContentCheckHasBeenPerformed: Boolean = false;
-  private _defaultScrollSetting: Boolean = this.enableScrollContent && (!this.enableScrollContentOnlyOnTop || !this.canBounce || this.disableDrag);
-  private _scrollContent: Boolean = this._defaultScrollSetting;
+  private _defaultScrollSetting: Boolean = false;
+  private _scrollContent: Boolean = false;
   private _dyInitialScrollDown: number = 0;
   private _dyInitialScrollUp: number = 0;
 
@@ -63,6 +63,7 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   /*********************************************************************************************************/
 
   ngAfterViewInit() {
+    this._loadForScroll();
     this._loadEvents();
     this._loadCssStyle();
     this._loadContentGesture();
@@ -97,6 +98,11 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
     contentGesture.on('panstart', () => this._onContentGestureStart()); 
     contentGesture.on('panend', (ev) => this._onContentGestureEnd(ev));
     contentGesture.on('pan', (ev) => this._onContentGestureMove(ev));
+  }
+
+  private _loadForScroll(){
+    this._defaultScrollSetting = this.enableScrollContent && (!this.enableScrollContentOnlyOnTop || !this.canBounce || this.disableDrag);
+    this._scrollContent = this._defaultScrollSetting;
   }
 
   private _adjustForShadow(){
