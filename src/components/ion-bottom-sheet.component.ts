@@ -44,7 +44,8 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   private _sheetTopAnimationHasBeenPerformed: Boolean = false;
   private _bottomShadowHeaderHasBeenPerformed: Boolean = false;
   private _scrollUpContentCheckHasBeenPerformed: Boolean = false;
-  private _scrollContent: Boolean = this.enableScrollContent && !this.enableScrollContentOnlyOnTop;
+  private _defaultScrollSetting: Boolean = this.enableScrollContent && (!this.enableScrollContentOnlyOnTop || !this.canBounce || this.disableDrag);
+  private _scrollContent: Boolean = this._defaultScrollSetting;
   private _dyInitialScrollDown: number = 0;
   private _dyInitialScrollUp: number = 0;
 
@@ -105,21 +106,18 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   }
 
   private _loadEvents(){
+    this._renderer.listen(this._element.nativeElement, "transitionend", this._checkForAnimationOnTop.bind(this));
+
     if (!this.hideCloseButton) {
       this._renderer.listen(this._element.nativeElement.querySelector("#close-button"), "click", this.closeSheet.bind(this));
     }
-  
-    if (this.disableDrag) { return; }
-    this._renderer.listen(this._element.nativeElement, "transitionend", this._checkForAnimationOnTop.bind(this));
-
-    if (!this.canBounce) { return; }
 
     if (this.enableScrollContent) {
       this._renderer.listen(this._element.nativeElement, "transitionend", this._checkForScrolling.bind(this));
       this._renderer.listen(this._element.nativeElement.querySelector("#ibs-content-inner"), "scroll", this._contentShadowOnScroll.bind(this));
     }
 
-    if (this.enableScrollContent && !this.enableScrollContentOnlyOnTop) {
+    if (this._defaultScrollSetting) {
       this._renderer.listen(this._element.nativeElement, "transitionend", this._changeNativeContentSize.bind(this));
     }
   }
@@ -172,17 +170,18 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   }
 
   private _checkForScrolling(){
-    // initialize up and down scroll initial values
     this._dyInitialScrollUp = this._dyInitialScrollDown = 0;
 
     if (this._element.nativeElement.getBoundingClientRect().y == this._getPosition(SheetState.Top)){
       this._scrollContent = this.enableScrollContent;
       return;
     }
-    this._scrollContent = this.enableScrollContent && !this.enableScrollContentOnlyOnTop;
+
+    this._scrollContent = this._defaultScrollSetting;
   }
 
   private _checkForAnimationOnTop(){
+
     if (this._element.nativeElement.getBoundingClientRect().y == this._getPosition(SheetState.Top)){
       if (this._sheetTopAnimationHasBeenPerformed) { return; }
       this._sheetTopAnimationHasBeenPerformed = true;
@@ -263,7 +262,7 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
     this._domCtrl.read(() => {
       let contentInnerScrollHeight = this._element.nativeElement.querySelector("#ibs-content-inner").scrollHeight;
       let contentHeight = this._element.nativeElement.querySelector("#ibs-content").getBoundingClientRect().height;
-      this._scrollContent = (contentHeight - contentInnerScrollHeight < 0) && !this.enableScrollContentOnlyOnTop;
+      this._scrollContent = (contentHeight - contentInnerScrollHeight < 0);
     });
   }
 
@@ -301,7 +300,6 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
 
   private _onHeaderGestureEnd(ev, dyInitial=0){
     if (!this.canBounce) { 
-      this._restoreNativeContentSize();
       if (this.enableScrollContent) { this._checkForScrolling(); }
       if (this.enableScrollContent && !this.enableScrollContentOnlyOnTop) { this._changeNativeContentSize(); }
       return; 
