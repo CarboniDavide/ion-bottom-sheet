@@ -115,9 +115,6 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
     if (this.enableScrollContent) {
       this._renderer.listen(this._element.nativeElement, "transitionend", this._checkForScrolling.bind(this));
       this._renderer.listen(this._element.nativeElement.querySelector("#ibs-content-inner"), "scroll", this._contentShadowOnScroll.bind(this));
-    }
-
-    if (this._defaultScrollSetting) {
       this._renderer.listen(this._element.nativeElement, "transitionend", this._changeNativeContentSize.bind(this));
     }
   }
