@@ -299,11 +299,7 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   }
 
   private _onHeaderGestureEnd(ev, dyInitial=0){
-    if (!this.canBounce) { 
-      if (this.enableScrollContent) { this._checkForScrolling(); }
-      if (this.enableScrollContent && !this.enableScrollContentOnlyOnTop) { this._changeNativeContentSize(); }
-      return; 
-    }
+    if (!this.canBounce) { return; }
 
     if ( Math.abs(ev.deltaY-dyInitial) > this.bounceDelta){
       this.stateChange.emit(this.state = this._nextSate(this.state, ev.deltaY-dyInitial));
