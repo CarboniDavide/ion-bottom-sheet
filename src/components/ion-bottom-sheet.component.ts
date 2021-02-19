@@ -33,9 +33,10 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   @Input() state: SheetState = SheetState.Bottom;
   @Input() title: string = "Header Title";
   @Input() enableScrollContent: Boolean = false;
-  @Input() enableScrollContentOnlyOnTop: Boolean = false;
+  @Input() enableScrollContentOnlyOnTop: Boolean = true;
   @Input() enableShadowHeaderOnScrolling: Boolean = true;
   @Input() useSmoothScrolling: Boolean = true;
+  @Input() reduceInLandscape: Boolean = true;
   
   @Output() stateChange: EventEmitter<SheetState> = new EventEmitter<SheetState>();
 
@@ -48,6 +49,12 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   private _scrollContent: Boolean = false;
   private _dyInitialScrollDown: number = 0;
   private _dyInitialScrollUp: number = 0;
+
+  RoundBorder:Boolean = this.roundBorder;
+  ShadowBorder:Boolean = this.shadowBorder;
+  EnableShadowHeaderOnScrolling:Boolean = false;
+  HideDragIconOnTop:Boolean = false;
+  HideCloseButtonOnTop:Boolean = false;
 
   constructor(
     private _element: ElementRef,
@@ -65,7 +72,6 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   ngAfterViewInit() {
     this._loadForScroll();
     this._loadEvents();
-    this._loadCssStyle();
     this._loadContentGesture();
     this._loadHeaderGesture();
   }
@@ -123,20 +129,6 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
       this._renderer.listen(this._element.nativeElement.querySelector("#ibs-content-inner"), "scroll", this._contentShadowOnScroll.bind(this));
       this._renderer.listen(this._element.nativeElement, "transitionend", this._changeNativeContentSize.bind(this));
     }
-  }
-
-  private _loadCssStyle(){
-    this._cssAutoManageClass("no-close-btn", this.hideCloseButton, this._element.nativeElement);
-    this._cssAutoManageClass("no-drag-icon", this.hideDragIcon, this._element.nativeElement);
-    this._cssAutoManageClass("no-title", this.hideTitle, this._element.nativeElement);
-    this._cssAutoManageClass("no-header", this.hideHeader, this._element.nativeElement);
-    this._cssAutoManageClass("separator", !this.hideSeparator, this._element.nativeElement.querySelector("#ibs-header"));
-    this._cssAutoManageClass("round-border", this.roundBorder, this._element.nativeElement.querySelector("#ibs-container"));
-    this._cssAutoManageClass("shadow-border", this.shadowBorder, this._element.nativeElement.querySelector("#ibs-container"));
-    this._cssAutoManageClass("txt-center", this.titleCentered, this._element.nativeElement.querySelector("#title"));
-    this._cssAutoManageClass("pd5", this.enableShadowHeaderOnScrolling, this._element.nativeElement.querySelector("#ibs-content"));
-    this._setStyle("font-size", this.titleSize, this._element.nativeElement.querySelector("#title"));
-    this._setStyle("font-family", this.titleFamily, this._element.nativeElement.querySelector("#title"));
   }
 
   private _setSheetState(state: SheetState) {
@@ -198,38 +190,10 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
       }
     }
 
-    if (!this.roundBorderOnTop && this.roundBorder) {
-      this._cssAutoManageClass("round-border", !this._sheetTopAnimationHasBeenPerformed, this._element.nativeElement.querySelector("#ibs-container"));
-    }
-    
-    if (!this.shadowBorderOnTop && this.shadowBorder) {
-      this._cssAutoManageClass("shadow-border", !this._sheetTopAnimationHasBeenPerformed, this._element.nativeElement.querySelector("#ibs-container"));
-    }
-
-    if (this.hideDragIconOnTop && !this.hideDragIcon) {
-      this._cssSwitchClass(this._sheetTopAnimationHasBeenPerformed ? "fadeOut" : "fadeIn", this._sheetTopAnimationHasBeenPerformed ? "fadeIn" : "fadeOut",  this._element.nativeElement.querySelector("#drag-icon"));
-    }
-
-    if (this.hideCloseButtonOnTop && !this.hideCloseButton) {
-      this._cssSwitchClass(this._sheetTopAnimationHasBeenPerformed ? "fadeOut" : "fadeIn", this._sheetTopAnimationHasBeenPerformed ? "fadeIn" : "fadeOut",  this._element.nativeElement.querySelector("#close-button"));
-    }
-  }
-
-  private _cssSwitchClass(entryClassName, exitClassName, selector) {
-    this._cssRemoveClass(exitClassName, selector);
-    this._cssAddClass(entryClassName, selector);
-  }
-
-  private _cssAutoManageClass(className:string, isToaddClass:Boolean, selector:HTMLBaseElement){
-    this._domCtrl.write(() => { isToaddClass ? this._cssAddClass(className, selector) : this._cssRemoveClass(className, selector) });
-  }
-
-  private _cssAddClass(className:string, selector:HTMLBaseElement){
-    this._domCtrl.write(() => this._renderer.addClass(selector, className) );
-  }
-
-  private _cssRemoveClass(className:string, selector: HTMLBaseElement){
-    this._domCtrl.write(() => this._renderer.removeClass(selector, className) );
+    this.RoundBorder = !this.roundBorderOnTop && this.roundBorder && !this._sheetTopAnimationHasBeenPerformed;
+    this.ShadowBorder = !this.shadowBorderOnTop && this.shadowBorder && !this._sheetTopAnimationHasBeenPerformed;
+    this.HideDragIconOnTop = this.hideDragIconOnTop && !this.hideDragIcon && this._sheetTopAnimationHasBeenPerformed;
+    this.HideCloseButtonOnTop = this.hideCloseButtonOnTop && !this.hideCloseButton && this._sheetTopAnimationHasBeenPerformed;
   }
 
   private _setStyle(property:string, value:string, selector:HTMLBaseElement){
@@ -278,9 +242,7 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
       this._bottomShadowHeaderHasBeenPerformed = false;
     }
 
-    if (this.enableShadowHeaderOnScrolling){
-      this._cssAutoManageClass("bottom-header-shadow", this._bottomShadowHeaderHasBeenPerformed, this._element.nativeElement.querySelector("#ibs-header"));
-    }
+    this.EnableShadowHeaderOnScrolling = this.enableShadowHeaderOnScrolling && this._bottomShadowHeaderHasBeenPerformed;
   }
  
   private _setTranslateY(value) {

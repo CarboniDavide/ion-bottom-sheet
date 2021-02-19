@@ -1,12 +1,12 @@
-<div id="ibs-container">
-  <div id="ibs-header" #ibs_header>
-    <div id="drag-icon"></div>
-    <div id="title-button">
-      <div id="title">{{ title }}</div>
-      <div id="close-button"></div>
+<div id="ibs-container" [class.round-border]="RoundBorder" [class.shadow-border]="ShadowBorder" [class.reduced]="reduceInLandscape">
+  <div id="ibs-header" [hidden]="hideHeader" [class.separator]="!hideSeparator" [class.bottom-header-shadow]="EnableShadowHeaderOnScrolling">
+    <div id="drag-icon" [hidden]="hideDragIcon" [class.fadeOut]="HideDragIconOnTop" class="fadeIn"></div>
+    <div id="title-button" [class.mt0]="hideTitle && !hideDragIcon" [class.mb0]="hideTitle && hideCloseButton" [class.m0]="hideTitle && hideDragIcon && hideCloseButton">
+      <div id="title" [hidden]="hideTitle" [class.txt-center]="titleCentered" [style.font-size]="titleSize" [style.font-family]="titleFamily">{{ title }}</div>
+      <div id="close-button" [hidden]="hideCloseButton" [class.fadeOut]="HideCloseButtonOnTop"  class="fadeIn"></div>
     </div>
   </div>
-  <div id="ibs-content" #ibs_content>
+  <div id="ibs-content" [class.pt5]="enableShadowHeaderOnScrolling" >
     <div id="ibs-content-inner">
       <ng-content></ng-content>
     </div>

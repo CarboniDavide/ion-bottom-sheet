@@ -90,8 +90,21 @@
   padding-right: 5px;
 }
 
-:host .pd5{
-  padding-top: 5px;
+:host .pt5{
+  padding-top: 5px !important;
+}
+
+:host .mt0{
+  margin-top: 0px !important;
+}
+
+:host .mb0{
+  margin-bottom: 0px !important;
+}
+
+:host .m0 {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 :host #ibs-content-inner{
@@ -100,38 +113,26 @@
   height: 100%;
 }
 
-:host .fadeOut {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s linear 700ms, opacity 700ms;  
-}
-
-:host .fadeIn {
+:host #drag-icon.fadeIn,
+:host #close-button.fadeIn {
   visibility: visible;
   opacity: 1;
   transition: visibility 0s linear 0s, opacity 300ms;
 }
 
-:host.no-drag-icon #drag-icon,
-:host.no-close-btn #close-button,
-:host.no-title #title,
-:host.no-header #ibs-header {
-  display: none !important;
+:host #close-button.fadeIn.fadeOut,
+:host #drag-icon.fadeIn.fadeOut{
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 700ms, opacity 700ms;  
 }
 
-:host.no-title #title-button {
-  margin-top: 0px;
-}
+@media only screen and (orientation: landscape) and (min-width: 768px){
 
-:host.no-title.no-drag-icon #title-button {
-  margin-top: 5px;
-}
+  :host  #ibs-container.reduced{
+    width: 70%;
+    margin-right: auto !important; 
+    margin-left: auto !important;
+  }
 
-:host.no-title.no-close-btn #title-button {
-  margin-bottom: 0px;
-}
-
-:host.no-drag-icon.no-title.no-close-btn #title-button {
-  margin-top: 0px;
-  margin-bottom: 0px;
 }
