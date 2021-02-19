@@ -20,6 +20,10 @@ $ npm i @types/hammerjs
 
 # API
 
+## Outputs
+
+  - `sheetState: EventEmitter<SheetState>` - Event emitter fired when a state change in children.
+
 ## Inputs
   - `roundBorder: boolean` - Use round border style. Default value: `true`.
   - `roundBorderOnTop: boolean` - Remove round border style when state is on `top`. Default value: `true`.
@@ -48,7 +52,7 @@ $ npm i @types/hammerjs
   - `enableScrollContentOnlyOnTop: boolean` - Enable scroll content only when sheet state is top. Default value: `false`.
   - `enableShadowHeaderOnScrolling: boolean` - Use shadow css style in the top of content when scrolling. Default value: `true`.
   - `useSmoothScrolling: boolean` - Use css smooth style to scroll content. Default value: `true`.
-  
+  - `reduceInLandscape: boolean` - Reduce width of 30% in landscape mode. Default value: `true`.
   
 # Demostration
 
@@ -78,6 +82,7 @@ Use it in your component template like this:
 <ion-content>
 
 <ion-bottom-sheet 
+    (sheetState)="onSheetStateChange()"
     [(state)]="sheetState" 
     [minHeight]="minHeight" 
     [dockedHeight]="dockedHeight"
