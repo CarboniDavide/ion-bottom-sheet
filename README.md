@@ -22,7 +22,7 @@ $ npm i @types/hammerjs
 
 ## Outputs
 
-  - `sheetState: EventEmitter<SheetState>` - Event emitter fired when a state change in children.
+  - `stateChange: EventEmitter<SheetState>` - Event emitter fired when a state change in children.
 
 ## Inputs
   - `roundBorder: boolean` - Use round border style. Default value: `true`.
