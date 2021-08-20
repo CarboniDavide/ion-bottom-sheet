@@ -2,6 +2,7 @@ import { Component, Input, ElementRef, Renderer2, Output, EventEmitter, AfterVie
 import { Platform, DomController} from '@ionic/angular';
 import { SheetState } from './ion-bottom-sheet-state';
 import * as Hammer from 'hammerjs';
+import { TotalHeightCSSUnit } from './total-height-css-unit';
  
 @Component({
   selector: 'ion-bottom-sheet',
@@ -36,6 +37,7 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   @Input() enableScrollContentOnlyOnTop: Boolean = false;
   @Input() enableShadowHeaderOnScrolling: Boolean = true;
   @Input() useSmoothScrolling: Boolean = true;
+  @Input() totalHeightCSSUnit: string = TotalHeightCSSUnit.VIEWPORT_HEIGHT;
   
   @Output() stateChange: EventEmitter<SheetState> = new EventEmitter<SheetState>();
 
@@ -142,9 +144,9 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   private _setSheetState(state: SheetState) {
     switch (state) {
       case SheetState.Bottom:
-        this._setTranslateY('calc(100vh - ' + this.minHeight + 'px)'); break;
+        this._setTranslateY('calc(100' + this.totalHeightCSSUnit + ' - ' + this.minHeight + 'px)'); break;
       case SheetState.Docked:
-        this._setTranslateY('calc(100vh - ' + this.dockedHeight + 'px)'); break;
+        this._setTranslateY('calc(100' + this.totalHeightCSSUnit + ' - ' + this.dockedHeight + 'px)'); break;
       case SheetState.Top:
         this._setTranslateY(this.topDistance + 'px'); break;
     }
@@ -246,13 +248,13 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
 
   private _restoreNativeContentSize(){
     if (!this._scrollContent) { return; }
-    let newContentHeight = "calc(100vh - " + (this.topDistance + this._getHeaderHeight()) + "px)";
+    let newContentHeight = "calc(100" + this.totalHeightCSSUnit + " - " + (this.topDistance + this._getHeaderHeight()) + "px)";
     this._setStyle("height", newContentHeight, this._element.nativeElement.querySelector("#ibs-content"));
   }
 
   private _changeNativeContentSize(){
     if (!this._scrollContent) { return; }
-    let newContentHeight = "calc(100vh - " + (this._element.nativeElement.getBoundingClientRect().y + this._getHeaderHeight()) + "px)";
+    let newContentHeight = "calc(100" + this.totalHeightCSSUnit + " - " + (this._element.nativeElement.getBoundingClientRect().y + this._getHeaderHeight()) + "px)";
     this._setStyle("height", newContentHeight, this._element.nativeElement.querySelector("#ibs-content"));
     this._autoEnableContentScroll();
   }
