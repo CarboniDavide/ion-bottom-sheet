@@ -38,6 +38,7 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
   @Input() useSmoothScrolling: Boolean = true;
   
   @Output() stateChange: EventEmitter<SheetState> = new EventEmitter<SheetState>();
+  @Output() contentScroll: EventEmitter<Event> = new EventEmitter<Event>();
 
   private _startPosition: number;
   private _startScroll: number = 0;
@@ -375,5 +376,11 @@ export class IonBottomSheetComponent implements AfterViewInit, OnChanges {
     }
     
     this._element.nativeElement.querySelector("#ibs-content-inner").scroll(0, nextScroll);
+  }
+
+  onScroll(ev) {
+    if (this.enableScrollContent) {
+      this.contentScroll.emit(ev);
+    }
   }
 }

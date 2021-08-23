@@ -48,8 +48,10 @@ $ npm i @types/hammerjs
   - `enableScrollContentOnlyOnTop: boolean` - Enable scroll content only when sheet state is top. Default value: `false`.
   - `enableShadowHeaderOnScrolling: boolean` - Use shadow css style in the top of content when scrolling. Default value: `true`.
   - `useSmoothScrolling: boolean` - Use css smooth style to scroll content. Default value: `true`.
-  
-  
+
+## Outputs
+  - `contentScroll: Event` - Content scroll event. `enableScrollContent` should be set to `true`.
+
 # Demostration
 
 ![Davide Carboni - Ion Bottom Sheet](doc/images/ion-sheet-states.png?raw=true "Title")
@@ -88,6 +90,7 @@ Use it in your component template like this:
     [roundBorderOnTop]="roundBorderOnTop"
     [disableDrag]="disableDrag"
     [transition]="transition"
+    (contentScroll)="onScroll($event)"
   >
   .....
 </ion-bottom-sheet>

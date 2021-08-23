@@ -8,7 +8,7 @@ import { IonBottomSheetProvider } from './providers/ion-bottom-sheet-provider';
   exports: [ IonBottomSheetComponent ]
 })
 export class IonBottomSheetModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<void> {
     return {
       ngModule: IonBottomSheetModule,
       providers: [ IonBottomSheetProvider ]
